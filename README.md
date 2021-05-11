@@ -20,17 +20,39 @@ Optionally re-balance the holdings yearly.
 
 ### Installing
 
-* Install Anaconda 3.8+  (anaconda.org)
-* Install pandas-datareader. From the Terminal:
-    * ```conda install pandas-datareader```
 * Clone this project locally
+
+* With Anaconda
+  * Install Anaconda 3.8+  (anaconda.org)
+    * Install pandas-datareader. From the Terminal:
+      * ```conda install pandas-datareader```
+
+* Alternatively, without Anaconda
+  * Install Python 3.x
+  * ```python -m pip install --user pipenv``` # Install virtualenv
+<!--
+  * ```python --version```
+       #Python 3.9.4
+  * ```#python -m pip install --user jupyter matplotlib pandas pandas-datareader```
+  * ```python -m pipenv install jupyter```
+  * ```python -m pipenv install matplotlib pandas pandas-datareader```
+  * ```jupyter notebook Backtest.ipynb``` # Run notebook
+-->
 
 ### Executing program
 
-* Launch "Anaconda-Navigator"
-* Launch "JupyterLab" from the Anaconda Navigator front page.
-* Open ```Backtest.ipynb```
-* Run All Cells
+* With Anaconda
+  * Launch "Anaconda-Navigator"
+  * Launch "JupyterLab" from the Anaconda Navigator front page.
+  * Open ```Backtest.ipynb```
+  * Run All Cells
+
+* Without Anaconda
+  * ```python -m pipenv run jupyter notebook Backtest.ipynb ``` # Activate virtualenv
+  * Run All Cells
+<!--
+  * ```python -m pipenv shell``` # Activate virtualenv
+-->
 
 ## Help
 
