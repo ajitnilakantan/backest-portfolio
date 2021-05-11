@@ -71,7 +71,8 @@ class DbCache:
                    FROM yahoo_daily
                    WHERE Ticker='{ticker}'
                    AND
-                   Date BETWEEN '{min_date}' AND '{max_date}'"""
+                   Date BETWEEN '{min_date}' AND '{max_date}'
+                   ORDER BY DATE(Date) ASC"""
         df = pd.read_sql_query(query, con=self._conn, index_col='Date', parse_dates={'Date': '%Y-%m-%d %H:%M:%S'})
         return df
 
@@ -213,9 +214,9 @@ def rebalance_portfolio(portfolio, portfolio_data, portfolio_num_shares, start, 
             break
 
         # Rebalance current investment
-        current_investment, _ = _portfolio_value(portfolio, portfolio_data, rebalanced_num_shares, at_date=dt)
-        num_shares_index =  rebalanced_num_shares.index.get_loc(dt, method='nearest') # both shoud be pad
-        data_index =  portfolio_data.index.get_loc(dt, method='nearest')
+        current_investment, _ = _portfolio_value(portfolio, portfolio_data, rebalanced_num_shares, at_date=year_end)
+        num_shares_index =  rebalanced_num_shares.index.get_loc(year_end, method='nearest') # both shoud be pad
+        data_index =  portfolio_data.index.get_loc(year_end, method='nearest')
         num_shares = []
         for fund in portfolio["holdings"]:
             share_price = portfolio_data.iloc[data_index][fund.ticker]
@@ -225,8 +226,11 @@ def rebalance_portfolio(portfolio, portfolio_data, portfolio_num_shares, start, 
             num_shares.append(num)
 
         # Add row to dataframe
-        rebalanced_num_shares.iloc[num_shares_index] = num_shares
+        # rebalanced_num_shares.iloc[num_shares_index] = num_shares
+        rebalanced_num_shares.loc[year_end] = num_shares
 
+    # portfolio_num_shares.to_csv("port.csv")
+    # rebalanced_num_shares.to_csv("port-rb.csv")
     return rebalanced_num_shares
 
 # Calculate total investment value at given date
@@ -336,8 +340,8 @@ if __name__ == "__main__":
     usd_cad = 1.3
 
     # Collect data for this time period
-    start = datetime.datetime(2019,  6, 19)
-    end   = datetime.datetime(2020,  7, 19)
+    start = datetime.datetime(2015,  6, 19)
+    end   = datetime.datetime(2021,  5,  1)
 
     # Baseline benchmark
     benchmark_portfolio = {
