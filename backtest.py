@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import pandas_datareader.data as web #conda install pandas-datareader
 import sqlite3
 
-__all__ = ['Holding', 'benchmark_portfolio']
+__all__ = ['Holding', 'download_portfolio_history', 'rebalance_portfolio', 'plot_results']
 
 Holding = collections.namedtuple('Holding', 'ticker percent description')
 
